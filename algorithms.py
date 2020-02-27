@@ -1,4 +1,6 @@
 
+# write minmax function that will work on iterable: list, tuple, set, frozenset
+
 def minmax(a):
     firstElem = True
 
@@ -17,6 +19,7 @@ def minmax(a):
     return x, y
 
 
+# return sum of odd numbers squares
 def sum_squares(n):
 
     if n > 0:
@@ -25,8 +28,8 @@ def sum_squares(n):
         return 0
 
 
-# Demonstrate how to use Python’s list comprehension syntax to produce
-# the list [1, 2, 4, 8, 16, 32, 64, 128, 256].
+# Produce the list [1, 2, 4, 8, 16, 32, 64, 128, 256].
+# Function is modified to take negative max power (n) with negative step
 
 def pow_list(base, n):
     pow_lst = []
@@ -79,8 +82,7 @@ def distinct_numbers(a):
     return res
 
 
-# Demonstrate how to use Python’s list comprehension syntax to produce
-# the list [0, 2, 6, 12, 20, 30, 42, 56, 72, 90].
+# Produce the list [0, 2, 6, 12, 20, 30, 42, 56, 72, 90].
 
 def progression():
     def gen():
@@ -92,7 +94,7 @@ def progression():
             n = n + a  # n = 2 n = 6
             yield n
 
-    return [i for i in gen()]
+    return list(gen())
 
 
 def symbols():
@@ -110,7 +112,8 @@ def replace_by_index(a, i, val):
     return a
 
 
-def factors(n):  # generator that computes factors
+# generator that computes factors
+def factors(n):
     k = 1
     while k*k < n:  # while k < sqrt(n)
         if n % k == 0:

@@ -99,30 +99,3 @@ class DVector(Vector):
     def __str__(self):
         return str(self._dcoords)
 
-
-
-u = Vector(2)
-u[1] = 2
-v = Vector(2)
-v[1] = 1
-print(-u)
-print(u - v)
-print(u * v)
-print([1, 1] + u)
-
-b = Vector([1, 2, 3])
-c = Vector(4)
-e = Vector('123')
-
-#d = Vector(1.3)
-print(b)
-print(c)
-print(e)
-
-a = DVector(3, 4)
-print(a)
-
-
-
-
-

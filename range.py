@@ -36,7 +36,7 @@ class Range:
 
 
     def __contains__(self, item):
-        """Checks """
+        """Checks if sequence contains item (like item in Range(0, 10, 2) )"""
         if self._step < 0 and (item < self._stop or item > self._start):
             return False
 
@@ -50,15 +50,3 @@ class Range:
         return False
 
 
-x = Range(0, 10, 2)
-y = Range(10, 0, -2)
-
-print(4 in x)
-print(5 in x)
-print(12 in x)
-print(-2 in x)
-
-print(4 in y)
-print(5 in y)
-print(12 in y)
-print(-2 in y)
