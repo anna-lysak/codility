@@ -18,6 +18,11 @@ from abc import ABCMeta, abstractmethod
 # ent genders. Otherwise, if two animals of the same type and gender try to
 # collide, then only the one of larger strength survives.
 
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+
 
 BEAR = 1
 FISH = 2
@@ -133,48 +138,55 @@ class Game:
 
     def __init__(self, river_length):
         self.river = River(river_length)
-        print("River is ", str(self.river))
+        logger.debug("River is {}".format(str(self.river)))
         self.river_length = river_length
         self.game_over = False
 
     def next_step(self):
+        if self.game_over:
+            logger.debug("Game is over")
+            return
+
         for i in range(0, self.river_length):
-            print("Step ", i)
+            logger.debug("Step {}".format(str(i)))
             animal1 = self.river.getAnimal(i)
             if not isinstance(animal1, Animal):
-                print("Animal1 is not Animal")
+                logger.debug("Animal1 is not Animal")
                 continue
 
             step_position = animal1.move(self.river_length)
-            print("Animal ", str(animal1), " moves to ", step_position)
+            logger.debug("Animal {0} moves to {1}".format(str(animal1), step_position))
             animal2 = self.river.getAnimal(step_position)
             if animal2 is None:
-                print("Animal ", str(animal1), " moves to empty place")
+                logger.debug("Animal {} moves to empty place".format(str(animal1)))
                 self.river.setAnimal(animal1, step_position)
                 self.river.removeAnimal(i)
 
             elif animal1.canPopulate(animal2):
                 place = self.river.findEmptyPlace()
-                print("Animals are of equal type. Creating new ", str(animal1), " at position ", place)
+                logger.debug("Animals are of equal type. Creating new {0} at position {1}"
+                             .format(str(animal1), place))
                 if place >= 0:
                     self.river.setAnimal(type(animal1)(), place)
                 else:
-                    print("Game over")
+                    logger.debug("Game over")
                     self.game_over = True
 
             elif animal1.beats(animal2) or animal1.eats(animal2):
-                print("Animal1 ", str(animal1), " eats/beats ", str(animal2), " and moves to ", step_position)
+                logger.debug("Animal1 {0} eats/beats {1} and moves to {2}"
+                             .format(str(animal1), str(animal2), step_position))
                 self.river.setAnimal(animal1, step_position)
 
             elif animal2.beats(animal1) or animal2.eats(animal1):
-                print("Animal2 ", str(animal2), " eats/beats ", str(animal1), ". Animal1 ", str(animal1), " disappears")
+                logger.debug("Animal2 {0} eats/beats {1}. Animal1 disappears"
+                             .format(str(animal2), str(animal1)))
                 self.river.removeAnimal(i)
 
             if self.game_over:
-                print("Break")
+                logger.debug("Game is over. Break")
                 break
 
-        print("River after step: ", str(self.river))
+        logger.debug("River after step: {}".format(str(self.river)))
 
 
 #g = Game()
